@@ -4,6 +4,8 @@ import "./App.css";
 // Bootstrap 사용을 위한 import
 import { Button, Navbar, Container, Nav } from "react-bootstrap";
 import data from "./data";
+import { Routes, Route, Link } from "react-router-dom";
+import Detail from "./component/detail";
 
 function App() {
   let [shoes, setShoes] = useState(data);
@@ -14,20 +16,35 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">DYshop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Cart</Nav.Link>
+            <Link className="home" to="/">
+              홈
+            </Link>
+            <Link className="detail" to="/detail">
+              상세페이지
+            </Link>
           </Nav>
         </Container>
       </Navbar>
-      <div className="main-bg"></div>
-      {/* bootstrap으로 비율 조절후 사진은 웹에서 가져옴 */}
-      <div className="container">
-        <div className="row">
-          {shoes.map((shoes, i) => {
-            return <Shoes i={i} shoes={shoes} />;
-          })}
-        </div>
-      </div>
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div className="main-bg"></div>
+              {/*{ bootstrap으로 비율 조절후 사진은 웹에서 가져옴 } */}
+              <div className="container">
+                <div className="row">
+                  {shoes.map((shoes, i) => {
+                    return <Shoes i={i} shoes={shoes} />;
+                  })}
+                </div>
+              </div>
+            </>
+          }
+        />
+        <Route path="/detail" element={<Detail />} />
+      </Routes>
     </div>
   );
 }

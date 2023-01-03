@@ -6,6 +6,17 @@
   background-position: center;
 }
 
+.home {
+  text-decoration: none;
+  color: white;
+  margin-right: 12px;
+}
+
+.detail {
+  text-decoration: none;
+  color: white;
+}
+
 .App {
   text-align: center;
 }
