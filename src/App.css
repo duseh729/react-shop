@@ -1,3 +1,11 @@
+/* 메인화면 이미지 css */
+.main-bg {
+  height: 300px;
+  background-image: url("./img/bg.png");
+  background-size: cover;
+  background-position: center;
+}
+
 .App {
   text-align: center;
 }
