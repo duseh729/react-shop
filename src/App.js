@@ -1,14 +1,16 @@
 import logo from "./logo.svg";
 import { useState } from "react";
 import "./App.css";
+import data from "./data";
 // Bootstrap 사용을 위한 import
 import { Button, Navbar, Container, Nav } from "react-bootstrap";
-import data from "./data";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./component/detail";
+import Home from "./component/home";
 
 function App() {
   let [shoes, setShoes] = useState(data);
+  let navigate = useNavigate();
   return (
     <div className="App">
       {/* 참고로 className으로 커스터마이징이 가능하다. */}
@@ -16,47 +18,48 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">DYshop</Navbar.Brand>
           <Nav className="me-auto">
-            <Link className="home" to="/">
-              홈
-            </Link>
-            <Link className="detail" to="/detail">
-              상세페이지
-            </Link>
+            {/* prettier-ignore */}
+            <Nav.Link onClick={() => {navigate('/')}}>Home</Nav.Link>
+            {/* prettier-ignore */}
+            <Nav.Link onClick={() => {navigate('/detail/0')}}>Detail</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <div className="main-bg"></div>
-              {/*{ bootstrap으로 비율 조절후 사진은 웹에서 가져옴 } */}
-              <div className="container">
-                <div className="row">
-                  {shoes.map((shoes, i) => {
-                    return <Shoes i={i} shoes={shoes} />;
-                  })}
-                </div>
-              </div>
-            </>
-          }
-        />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/" element={<Home />} />
+        {/* url 파라미터 문법 */}
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        {/* path='*'은 지정한 경로 외에 모든 경로 */}
+        <Route path="*" element={<div>없는 페이지야;;</div>} />
       </Routes>
     </div>
   );
 }
-
-function Shoes(props) {
+function Event() {
   return (
-    <div className="col-md-4" key={props.i}>
-      <img src={`https://codingapple1.github.io/shop/shoes${props.i + 1}.jpg`} width="80%" />
-      <h4>{props.shoes.title}</h4>
-      <p>{props.shoes.price}</p>
+    <div>
+      <h4>오늘의 이벤트</h4>
+      <Outlet></Outlet>
     </div>
   );
+  // <Route path="/about" element={<About />}>
+  //   <Route path="member" element={<div>멤버</div>} />
+  //   <Route path="location" element={<About />} />
+  // </Route>;
+}
+
+function About() {
+  return (
+    <div>
+      <h4>회사정보</h4>
+      {/* 빈 공간이다. 하위페이지를 넣을 공간이다. */}
+      <Outlet></Outlet>
+    </div>
+  );
+  // <Route path="/event" element={<Event />}>
+  //   <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
+  //   <Route path="two" element={<p>쿠폰 줄게</p>} />
+  // </Route>;
 }
 
 export default App;
