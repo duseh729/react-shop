@@ -1,5 +1,6 @@
 import { useState } from "react";
 import data from "../data";
+import axios from "axios";
 
 export default function Home() {
   let [shoes, setShoes] = useState(data);
@@ -14,6 +15,24 @@ export default function Home() {
           })}
         </div>
       </div>
+      <button
+        onClick={() => {
+          // axios.get를 활용한 데이터 가져오기.
+          // prettier-ignore
+          axios.get('https://codingapple1.github.io/shop/data2.json')
+          .then((result)=>{
+            let copy = [...shoes]
+            result.data.forEach((a)=>{copy = copy.concat(a)})
+            setShoes(copy)
+          })
+          // 데이터 요청 실패시 실행될 코드
+          .catch(()=>{
+            console.log('실패;;')
+          })
+        }}
+      >
+        버튼
+      </button>
     </>
   );
 }
