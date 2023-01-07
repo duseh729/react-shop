@@ -11,7 +11,7 @@ export default function Home() {
       <div className="container">
         <div className="row">
           {shoes.map((shoes, i) => {
-            return <Shoes i={i} shoes={shoes} />;
+            return <Shoes i={i} shoes={shoes} key={i} />;
           })}
         </div>
       </div>
@@ -20,19 +20,25 @@ export default function Home() {
           // axios.get를 활용한 데이터 가져오기.
           // prettier-ignore
           axios.get('https://codingapple1.github.io/shop/data2.json')
-          .then((result)=>{
-            let copy = [...shoes]
-            result.data.forEach((a)=>{copy = copy.concat(a)})
-            setShoes(copy)
-          })
-          // 데이터 요청 실패시 실행될 코드
-          .catch(()=>{
-            console.log('실패;;')
+            .then((result)=>{
+              let copy = [...shoes, ...result.data];
+              setShoes(copy);
+            })
+            // 데이터 요청 실패시 실행될 코드
+            .catch(()=>{
+              console.log('실패;;')
           })
         }}
       >
-        버튼
+        더보기
       </button>
+    </>
+  );
+}
+function Load() {
+  return (
+    <>
+      <div className="alert alert-warning">로딩중이야~</div>
     </>
   );
 }

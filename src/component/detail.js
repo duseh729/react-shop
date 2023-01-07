@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { Nav } from "react-bootstrap";
 
 export default function Detail(props) {
   let [count, setCount] = useState(0);
   let [timer, setTimer] = useState(true);
   let [isNum, setIsNum] = useState(false);
   let [numInput, setNumInput] = useState("");
+  let [탭, 탭변경] = useState(0);
   useEffect(() => {
     if (isNaN(numInput)) {
       setIsNum(true);
@@ -26,7 +28,7 @@ export default function Detail(props) {
   let { id } = useParams();
   // 응용 자료의 순서가 변경되었을 때 상세페이지가 고장나는문제
   // 상품에 id를 부여해서 id값으로 데이터를 찾아서 페이지를 보여준다.
-  let shoes = props.shoes.find((element) => element.id === parseInt(id));
+  let shoes = props.shoes.find(element => element.id === parseInt(id));
 
   return (
     <div className="container">
@@ -47,6 +49,25 @@ export default function Detail(props) {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
+      <Nav variant="tabs" defalutActiveKey="link0">
+        <Nav.Item>
+          {/* prettier-ignore */}
+          <Nav.Link onClick={()=>{탭변경(0)}} eventKey="link0">버튼0</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          {/* prettier-ignore */}
+          <Nav.Link onClick={()=>{탭변경(1)}} eventKey="link1">버튼1</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          {/* prettier-ignore */}
+          <Nav.Link onClick={()=>{탭변경(2)}} eventKey="link2">버튼2</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      {<Tab 탭={탭} />}
     </div>
   );
+}
+
+function Tab({ 탭 }) {
+  return [<div>0</div>, <div>1</div>, <div>2</div>][탭];
 }
