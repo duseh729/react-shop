@@ -17,6 +17,13 @@
   color: white;
 }
 
+.start {
+  opacity: 0;
+}
+.end {
+  opacity: 1;
+  transition: 0.5s;
+}
 .App {
   text-align: center;
 }

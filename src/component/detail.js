@@ -9,6 +9,16 @@ export default function Detail(props) {
   let [isNum, setIsNum] = useState(false);
   let [numInput, setNumInput] = useState("");
   let [탭, 탭변경] = useState(0);
+  let [fade, setFade] = useState("");
+  useEffect(() => {
+    let a = setTimeout(() => {
+      setFade("end");
+    }, 10);
+    return () => {
+      clearTimeout(a);
+      setFade("");
+    };
+  }, []);
   useEffect(() => {
     if (isNaN(numInput)) {
       setIsNum(true);
@@ -31,7 +41,7 @@ export default function Detail(props) {
   let shoes = props.shoes.find(element => element.id === parseInt(id));
 
   return (
-    <div className="container">
+    <div className={`container start ${fade}`}>
       {timer ? <div className="alert alert-warning">2초이내 구매시 할인</div> : null}
       {/* prettier-ignore */}
       <button onClick={()=>{setCount(count + 1)}}>버튼</button>
@@ -52,7 +62,7 @@ export default function Detail(props) {
       <Nav variant="tabs" defalutActiveKey="link0">
         <Nav.Item>
           {/* prettier-ignore */}
-          <Nav.Link onClick={()=>{탭변경(0)}} eventKey="link0">버튼0</Nav.Link>
+          <Nav.Link className="animation" onClick={()=>{탭변경(0)}} eventKey="link0">버튼0</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           {/* prettier-ignore */}
@@ -69,5 +79,16 @@ export default function Detail(props) {
 }
 
 function Tab({ 탭 }) {
-  return [<div>0</div>, <div>1</div>, <div>2</div>][탭];
+  let [fade, setFade] = useState("");
+
+  useEffect(() => {
+    let a = setTimeout(() => {
+      setFade("end");
+    }, 10);
+    return () => {
+      clearTimeout(a);
+      setFade("");
+    };
+  }, [탭]);
+  return <div className={`start ${fade}`}>{[<div>0</div>, <div>1</div>, <div>2</div>][탭]}</div>;
 }
