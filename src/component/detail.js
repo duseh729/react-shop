@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
+import { Context1 } from "../App";
 
 export default function Detail(props) {
   let [count, setCount] = useState(0);
@@ -62,25 +63,26 @@ export default function Detail(props) {
       <Nav variant="tabs" defalutActiveKey="link0">
         <Nav.Item>
           {/* prettier-ignore */}
-          <Nav.Link className="animation" onClick={()=>{탭변경(0)}} eventKey="link0">버튼0</Nav.Link>
+          <Nav.Link className="animation" onClick={()=>{탭변경(0)}} eventKey="link0">이름</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           {/* prettier-ignore */}
-          <Nav.Link onClick={()=>{탭변경(1)}} eventKey="link1">버튼1</Nav.Link>
+          <Nav.Link onClick={()=>{탭변경(1)}} eventKey="link1">재고</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           {/* prettier-ignore */}
-          <Nav.Link onClick={()=>{탭변경(2)}} eventKey="link2">버튼2</Nav.Link>
+          <Nav.Link onClick={()=>{탭변경(2)}} eventKey="link2">가격</Nav.Link>
         </Nav.Item>
       </Nav>
-      {<Tab 탭={탭} />}
+      {<Tab 탭={탭} shoes={props.shoes} />}
     </div>
   );
 }
 
 function Tab({ 탭 }) {
+  let { 재고, shoes } = useContext(Context1);
+  let { id } = useParams();
   let [fade, setFade] = useState("");
-
   useEffect(() => {
     let a = setTimeout(() => {
       setFade("end");
@@ -90,5 +92,5 @@ function Tab({ 탭 }) {
       setFade("");
     };
   }, [탭]);
-  return <div className={`start ${fade}`}>{[<div>0</div>, <div>1</div>, <div>2</div>][탭]}</div>;
+  return <div className={`start ${fade}`}>{[<div>{shoes[id].title}</div>, <div>{재고[0]}</div>, <div>{shoes[id].price}</div>][탭]}</div>;
 }

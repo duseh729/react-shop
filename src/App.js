@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import { useState } from "react";
+import { useState, createContext } from "react";
 import "./App.css";
 import data from "./data";
 // Bootstrap 사용을 위한 import
@@ -8,9 +8,14 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./component/detail";
 import Home from "./component/home";
 
+// state 보관함이라 볼 수 있다.
+export let Context1 = createContext();
+
 function App() {
   let [shoes, setShoes] = useState(data);
+  let [재고, 재고변경] = useState([10, 11, 12]);
   let navigate = useNavigate();
+
   return (
     <div className="App">
       {/* 참고로 className으로 커스터마이징이 가능하다. */}
@@ -28,7 +33,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         {/* url 파라미터 문법 */}
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route
+          path="/detail/:id"
+          element={
+            <Context1.Provider value={{ 재고, shoes }}>
+              <Detail shoes={shoes} />
+            </Context1.Provider>
+          }
+        />
         {/* path='*'은 지정한 경로 외에 모든 경로 */}
         <Route path="*" element={<div>없는 페이지야;;</div>} />
       </Routes>

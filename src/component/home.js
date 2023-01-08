@@ -1,6 +1,7 @@
 import { useState } from "react";
 import data from "../data";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   let [shoes, setShoes] = useState(data);
@@ -46,9 +47,11 @@ function Load() {
 function Shoes(props) {
   return (
     <div className="col-md-4" key={props.i}>
-      <img src={`https://codingapple1.github.io/shop/shoes${props.i + 1}.jpg`} width="80%" />
-      <h4>{props.shoes.title}</h4>
-      <p>{props.shoes.price}</p>
+      <Link className="link" to={`/detail/${props.i}`}>
+        <img src={`https://codingapple1.github.io/shop/shoes${props.i + 1}.jpg`} width="80%" />
+        <h4>{props.shoes.title}</h4>
+        <p>{props.shoes.price}</p>
+      </Link>
     </div>
   );
 }
