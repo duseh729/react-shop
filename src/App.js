@@ -7,6 +7,7 @@ import { Button, Navbar, Container, Nav } from "react-bootstrap";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./component/detail";
 import Home from "./component/home";
+import Cart from "./component/cart";
 
 // state 보관함이라 볼 수 있다.
 export let Context1 = createContext();
@@ -41,6 +42,7 @@ function App() {
             </Context1.Provider>
           }
         />
+        <Route path="/cart" element={<Cart />} />
         {/* path='*'은 지정한 경로 외에 모든 경로 */}
         <Route path="*" element={<div>없는 페이지야;;</div>} />
       </Routes>
