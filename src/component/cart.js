@@ -1,6 +1,14 @@
 import { Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { increase } from "../store";
+import { changeName } from "../store/userSlice";
 
 export default function Cart() {
+  // 기본 문법임
+  let cart = useSelector((state) => state.cart); // 가져오고 싶은 거만 가져올 수 있음.
+  //Redux store에 있는 state를 가져옴
+  let dispatch = useDispatch(); //store.js로 요청 보내주는 함수
+
   return (
     <div>
       <Table>
@@ -15,12 +23,26 @@ export default function Cart() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>안녕</td>
-            <td>안녕</td>
-            <td>안녕</td>
-          </tr>
+          {cart.map((data, i) => {
+            return (
+              <tr key={i}>
+                <td>{data.id}</td>
+                <td>{data.name}</td>
+                <td>{data.count}</td>
+                <td>
+                  <button
+                    onClick={(e) => {
+                      // store로 함수를 요청함. 파라미터는 id값을 보냄.
+                      dispatch(increase(data.id));
+                      console.log(data.id);
+                    }}
+                  >
+                    +
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </div>
