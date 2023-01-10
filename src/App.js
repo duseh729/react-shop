@@ -28,6 +28,8 @@ function App() {
             <Nav.Link onClick={() => {navigate('/')}}>Home</Nav.Link>
             {/* prettier-ignore */}
             <Nav.Link onClick={() => {navigate('/detail/0')}}>Detail</Nav.Link>
+            {/* prettier-ignore */}
+            <Nav.Link onClick={() => {navigate('/cart')}}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

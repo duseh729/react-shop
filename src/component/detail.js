@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { Context1 } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { addShoes } from "../store";
 
 export default function Detail(props) {
   let [count, setCount] = useState(0);
@@ -11,6 +13,7 @@ export default function Detail(props) {
   let [numInput, setNumInput] = useState("");
   let [탭, 탭변경] = useState(0);
   let [fade, setFade] = useState("");
+  let dispatch = useDispatch();
   useEffect(() => {
     let a = setTimeout(() => {
       setFade("end");
@@ -39,7 +42,7 @@ export default function Detail(props) {
   let { id } = useParams();
   // 응용 자료의 순서가 변경되었을 때 상세페이지가 고장나는문제
   // 상품에 id를 부여해서 id값으로 데이터를 찾아서 페이지를 보여준다.
-  let shoes = props.shoes.find(element => element.id === parseInt(id));
+  let shoes = props.shoes.find((element) => element.id === parseInt(id));
 
   return (
     <div className={`container start ${fade}`}>
@@ -57,7 +60,15 @@ export default function Detail(props) {
           <h4 className="pt-5">{shoes.title}</h4>
           <p>{shoes.content}</p>
           <p>{shoes.price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button
+            onClick={() => {
+              dispatch(addShoes({ id: shoes.id, name: shoes.title, count: 1 }));
+              console.log("성공인가,,");
+            }}
+            className="btn btn-danger"
+          >
+            주문하기
+          </button>
         </div>
       </div>
       <Nav variant="tabs" defalutActiveKey="link0">
