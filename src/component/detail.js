@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { Context1 } from "../App";
 import { useDispatch, useSelector } from "react-redux";
-import { addShoes } from "../store";
+import { addItem, removeItem } from "../store";
 
 export default function Detail(props) {
   let [count, setCount] = useState(0);
@@ -42,7 +42,7 @@ export default function Detail(props) {
   let { id } = useParams();
   // 응용 자료의 순서가 변경되었을 때 상세페이지가 고장나는문제
   // 상품에 id를 부여해서 id값으로 데이터를 찾아서 페이지를 보여준다.
-  let shoes = props.shoes.find((element) => element.id === parseInt(id));
+  let shoes = props.shoes.find(element => element.id === parseInt(id));
 
   return (
     <div className={`container start ${fade}`}>
@@ -62,7 +62,8 @@ export default function Detail(props) {
           <p>{shoes.price}</p>
           <button
             onClick={() => {
-              dispatch(addShoes({ id: shoes.id, name: shoes.title, count: 1 }));
+              // 장바구니 추가 기능
+              dispatch(addItem({ id: shoes.id, name: shoes.title, count: 1 }));
               console.log("성공인가,,");
             }}
             className="btn btn-danger"
@@ -103,5 +104,5 @@ function Tab({ 탭 }) {
       setFade("");
     };
   }, [탭]);
-  return <div className={`start ${fade}`}>{[<div>{shoes[id].title}</div>, <div>{재고[0]}</div>, <div>{shoes[id].price}</div>][탭]}</div>;
+  return <div className={`start ${fade}`}>{[<div>{shoes[id].title}</div>, <div>{재고[id]}</div>, <div>{shoes[id].price}</div>][탭]}</div>;
 }

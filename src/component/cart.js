@@ -1,11 +1,11 @@
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { increase } from "../store";
+import { increase, removeItem } from "../store";
 import { changeName } from "../store/userSlice";
 
 export default function Cart() {
   // 기본 문법임
-  let cart = useSelector((state) => state.cart); // 가져오고 싶은 거만 가져올 수 있음.
+  let cart = useSelector(state => state.cart); // 가져오고 싶은 거만 가져올 수 있음.
   //Redux store에 있는 state를 가져옴
   let dispatch = useDispatch(); //store.js로 요청 보내주는 함수
 
@@ -31,13 +31,23 @@ export default function Cart() {
                 <td>{data.count}</td>
                 <td>
                   <button
-                    onClick={(e) => {
+                    className="btn btn-primary"
+                    onClick={e => {
                       // store로 함수를 요청함. 파라미터는 id값을 보냄.
                       dispatch(increase(data.id));
                       console.log(data.id);
                     }}
                   >
                     +
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      dispatch(removeItem(data.id));
+                      console.log("삭제 성공");
+                    }}
+                  >
+                    삭제
                   </button>
                 </td>
               </tr>
