@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import "./App.css";
 import data from "./data";
 // Bootstrap 사용을 위한 import
@@ -13,10 +13,20 @@ import Cart from "./component/cart";
 export let Context1 = createContext();
 
 function App() {
+  let isLocalData = localStorage.getItem("watched");
+  let watched = "";
+  if (isLocalData === null) {
+    localStorage.setItem("watched", JSON.stringify([]));
+  } else {
+    watched = JSON.parse(isLocalData)[JSON.parse(isLocalData).length - 1];
+  }
+
   let [shoes, setShoes] = useState(data);
   let [재고, 재고변경] = useState([10, 11, 12]);
   let navigate = useNavigate();
 
+  console.log(shoes, watched);
+  console.log(shoes[parseInt(watched)]);
   return (
     <div className="App">
       {/* 참고로 className으로 커스터마이징이 가능하다. */}
@@ -30,6 +40,7 @@ function App() {
             <Nav.Link onClick={() => {navigate('/detail/0')}}>Detail</Nav.Link>
             {/* prettier-ignore */}
             <Nav.Link onClick={() => {navigate('/cart')}}>Cart</Nav.Link>
+            <Nav.Link className="watched">{shoes[parseInt(watched)].title}</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

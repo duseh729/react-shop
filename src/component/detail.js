@@ -7,6 +7,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem } from "../store";
 
 export default function Detail(props) {
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("watched"));
+    if (data.includes(id)) {
+      console.log("있는디");
+      console.log(data);
+      data.splice(data.indexOf(id), 1);
+      data.push(id);
+      localStorage.setItem("watched", JSON.stringify(data));
+    } else {
+      console.log("없는디 추가해줄게");
+      data.push(id);
+      localStorage.setItem("watched", JSON.stringify(data));
+    }
+  }, []);
+
   let [count, setCount] = useState(0);
   let [timer, setTimer] = useState(true);
   let [isNum, setIsNum] = useState(false);

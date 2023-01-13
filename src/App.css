@@ -27,6 +27,14 @@
   opacity: 1;
   transition: 0.5s;
 }
+/* 최근 본 상품 css */
+.watched {
+  color: white;
+  background-image: url("./img/bg.png");
+  background-size: cover;
+  background-position: center;
+}
+
 .App {
   text-align: center;
 }
