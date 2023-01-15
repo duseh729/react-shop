@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 // npm install @reduxjs/toolkit react-redux
 import { Provider } from "react-redux";
 import store from "./store";
+// npm install @tanstack/react-query
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
@@ -14,7 +15,7 @@ const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-  <QueryClientProvider client={queyClient}>
+  <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <BrowserRouter>
         <App />

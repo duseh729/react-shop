@@ -8,6 +8,8 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./component/detail";
 import Home from "./component/home";
 import Cart from "./component/cart";
+import axios from "axios";
+import { useQuery } from "react-query";
 
 // state 보관함이라 볼 수 있다.
 export let Context1 = createContext();
@@ -25,8 +27,31 @@ function App() {
   let [재고, 재고변경] = useState([10, 11, 12]);
   let navigate = useNavigate();
 
-  console.log(shoes, watched);
-  console.log(shoes[parseInt(watched)]);
+  // 원래 ajax를 이용한 서버 통신.
+  // axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
+  //   a.data
+  // });
+
+  // react-query 이용한 ajax 요청
+  let result = useQuery("작명", () => {
+    return (
+      axios.get("https://codingapple1.github.io/userdata.json").then(a => {
+        console.log("요청");
+        return a.data;
+      }),
+      { staleTime: 2000 } // 재요청하지 않는 옵션 추가 가능
+    );
+  });
+
+  // 데이터 출력
+  // result.data;
+  // 데이터 요청중일때 트루가 뜸
+  // result.isLoading;
+  // 실패시 트루가 뜸
+  // result.error;
+
+  // console.log(shoes, watched);
+  // console.log(shoes[parseInt(watched)]);
   return (
     <div className="App">
       {/* 참고로 className으로 커스터마이징이 가능하다. */}
@@ -42,6 +67,7 @@ function App() {
             <Nav.Link onClick={() => {navigate('/cart')}}>Cart</Nav.Link>
             <Nav.Link className="watched">{shoes[parseInt(watched)].title}</Nav.Link>
           </Nav>
+          <Nav className="ms-auto color">{result.isLoading ? "로딩중" : result.data.name}</Nav>
         </Container>
       </Navbar>
       <Routes>
